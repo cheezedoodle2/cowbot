@@ -10,8 +10,10 @@ module.exports = {
                 switch(Math.floor(Math.random() * 2)) {
                     case 0:
                         message.react("🐮");
+                        break;
                     case 1:
                         message.react("moo:1056104701839548456");
+                        break;
                 }
             }
             catch(error) {
