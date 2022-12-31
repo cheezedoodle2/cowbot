@@ -8,8 +8,10 @@ const client = new Client(
         intents: [
             GatewayIntentBits.Guilds,
             GatewayIntentBits.GuildMembers, 
+			GatewayIntentBits.GuildMessages,
+			GatewayIntentBits.GuildMessageReactions,
             GatewayIntentBits.GuildPresences,
-            GatewayIntentBits.MessageContent 
+            GatewayIntentBits.MessageContent
         ]
     }
 );
@@ -30,28 +32,18 @@ for (const file of commandFiles) {
 	}
 }
 
-client.on(Events.InteractionCreate, async interaction => {
-	if (!interaction.isChatInputCommand()) return;
+const eventsPath = path.join(__dirname, 'events');
+const eventFiles = fs.readdirSync(eventsPath).filter(file => file.endsWith('.js'));
 
-    const command = interaction.client.commands.get(interaction.commandName);
-
-	if (!command) {
-		console.error(`No command matching ${interaction.commandName} was found.`);
-		return;
+for (const file of eventFiles) {
+	const filePath = path.join(eventsPath, file);
+	const event = require(filePath);
+	if (event.once) {
+		client.once(event.name, (...args) => event.execute(...args));
+	} else {
+		client.on(event.name, (...args) => event.execute(...args));
 	}
-
-	try {
-		await command.execute(interaction);
-	} catch (error) {
-		console.error(error);
-		await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
-	}
-	console.log(interaction);
-});
-
-client.once(Events.ClientReady, c => {
-	console.log(`Ready! Logged in as ${c.user.tag}`);
-});
+}
 
 // Log in to Discord with your client's token
 client.login(token);
