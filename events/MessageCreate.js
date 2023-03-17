@@ -8,7 +8,7 @@ module.exports = {
         if (message.cleanContent.search("e-girl") >= 0) {
             message.reply("I'm not an e-girl!  -- Brooke");
         }
-        if (message.cleanContent.search("moo") >= 0) {
+        if (message.cleanContent.toLowerCase().search("moo") >= 0) {
             try {
                 switch(Math.floor(Math.random() * 2)) {
                     case 0:
