@@ -1,0 +1,14 @@
+[Unit]
+Description=PM2 Process Manager
+After=network.target
+
+[Service]
+Type=forking
+User=ubuntu
+Environment=PATH=$PATH:/home/ubuntu/.nodenv/versions/17.0.1/bin
+WorkingDirectory=/home/ubuntu/cowbot
+ExecStart=/home/ubuntu/cowbot/node_modules/pm2/bin/pm2 start /home/ubuntu/cowbot/index.js --name "index"
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
