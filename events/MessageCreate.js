@@ -1,9 +1,9 @@
 const { Events } = require('discord.js');
 
 module.exports = {
-	name: Events.MessageCreate,
-	async execute(message) {
-		if (message.author.bot) return;
+    name: Events.MessageCreate,
+    async execute(message) {
+        if (message.author.bot) return;
         //console.log("message: " + message.cleanContent);
         if (message.cleanContent.search("e-girl") >= 0) {
             message.reply("I'm not an e-girl!  -- Brooke");
@@ -23,5 +23,5 @@ module.exports = {
                 console.log(error);
             }
         }
-	},
+    },
 };
