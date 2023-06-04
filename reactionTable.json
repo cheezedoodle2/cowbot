@@ -9,6 +9,12 @@
             "pattern": "meow",
             "patternFlags": "i",
             "reactions": ["🐱"]
+        },
+        {
+            "pattern": "e-girl",
+            "patternFlags": "i",
+            "reactions": ["😡", "😤"],
+            "replyMessages": ["I'm not an e-girl!  -- Brooke"]
         }
     ]
 }
