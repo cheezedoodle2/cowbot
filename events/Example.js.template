@@ -1,0 +1,15 @@
+import { Events } from 'discord.js';
+import '../util.js';
+
+let eventName = Events.[SOMETHING];
+let once = false;
+async function execute(...parameters) {
+    try {
+        dbg("something happened");
+    }
+    catch(error) {
+        dbg("well, that didn't work");
+    }
+}
+
+export { eventName, once, execute }
