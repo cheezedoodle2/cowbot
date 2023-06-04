@@ -1,7 +1,8 @@
-const fs = require('node:fs');
-const path = require('node:path');
-const { Client, Collection, Events, GatewayIntentBits } = require('discord.js');
-const { token } = require('./config.json');
+import fs from 'node:fs';
+import path from 'node:path';
+import { Client, Collection, Events, GatewayIntentBits, parseEmoji } from 'discord.js';
+import config from './config.json' assert { type: 'json' };
+import './util.js';
 
 const client = new Client(
     { 
@@ -18,12 +19,13 @@ const client = new Client(
 
 client.commands = new Collection();
 
-const commandsPath = path.join(__dirname, 'commands');
+const commandsPath = path.join(path.dirname(new URL(import.meta.url).pathname), 'commands');
 const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
 
 for (const file of commandFiles) {
     const filePath = path.join(commandsPath, file);
-    const command = require(filePath);
+    dbg(`Loading command file ${filePath}...`);
+    const { command } = await import(filePath);
     // Set a new item in the Collection with the key as the command name and the value as the exported module
     if ('data' in command && 'execute' in command) {
         client.commands.set(command.data.name, command);
@@ -32,18 +34,22 @@ for (const file of commandFiles) {
     }
 }
 
-const eventsPath = path.join(__dirname, 'events');
+const eventsPath = path.join(path.dirname(new URL(import.meta.url).pathname), 'events');
 const eventFiles = fs.readdirSync(eventsPath).filter(file => file.endsWith('.js'));
 
 for (const file of eventFiles) {
     const filePath = path.join(eventsPath, file);
-    const event = require(filePath);
-    if (event.once) {
-        client.once(event.name, (...args) => event.execute(...args));
+    dbg(`Loading event file ${filePath}...`);
+    const eventModule = await import(filePath)
+    const { eventName, once, execute } = eventModule;
+    if (once) {
+        client.once(eventName, (...args) => execute(...args));
     } else {
-        client.on(event.name, (...args) => event.execute(...args));
+        client.on(eventName, (...args) => execute(...args));
     }
+    dbg(`Loaded event file ${filePath}, eventName: ${eventName}, once: ${once}`);
 }
 
 // Log in to Discord with your client's token
-client.login(token);
+client.login(config.token);
+
