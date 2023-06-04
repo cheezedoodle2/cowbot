@@ -1,5 +1,6 @@
 {
     "token": "TOKEN",
-	"clientId": "CLIENT ID",
-	"guildId": "DEVELOPMENT SERVER ID`"
+    "clientId": "CLIENT ID",
+    "guildId": "DEVELOPMENT SERVER ID`",
+    "logChannelId": "LOG CHANNEL ID"
 }
