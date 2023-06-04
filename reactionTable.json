@@ -1,0 +1,14 @@
+{ 
+    "reactionTableEntries": [
+        {
+            "pattern": "moo",
+            "patternFlags": "i",
+            "reactions": ["🐮", "🐄", "moo:1056104701839548456", "googlecow:1114689470021771284"]
+        },
+        {
+            "pattern": "meow",
+            "patternFlags": "i",
+            "reactions": ["🐱"]
+        }
+    ]
+}
