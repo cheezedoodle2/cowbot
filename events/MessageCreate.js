@@ -8,7 +8,7 @@ async function execute(message) {
     dbg("message: " + message.cleanContent);
     for(let reaction of reactionTable.reactionTableEntries) {
         try {
-            if (message.cleanContent.match(reaction.pattern)) {
+            if (message.cleanContent.match(new RegExp(reaction.pattern, reaction.patternFlags))) {
                 if(reaction.reactions?.length > 0) {
                     message.react(reaction.reactions[Math.floor(Math.random() * reaction.reactions.length)]);
                 }
