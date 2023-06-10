@@ -20,6 +20,11 @@
             "pattern": "hilarious",
             "patternFlags": "i",
             "reactions": ["lol:1114838810103136297", "🤣", "😂"]
+        },
+	{
+            "pattern": "baa",
+            "patternFlags": "i",
+            "reactions": ["🐐"]
         }
     ]
 }
